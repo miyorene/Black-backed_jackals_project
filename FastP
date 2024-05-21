@@ -1,0 +1,36 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+#-------------------Paths--------------------
+
+masters="/mnt/tank/scratch/yunovikova/masters"
+genomes="/mnt/tank/scratch/yunovikova/masters/genomes"
+fastqc="/mnt/tank/scratch/yunovikova/masters/FastQC"
+fastp="/mnt/tank/scratch/yunovikova/masters/fastp"
+reference="/mnt/tank/scratch/yunovikova/masters/reference"
+aligned_reads="/mnt/tank/scratch/yunovikova/masters/aligned_reads"
+sorted_reads="/mnt/tank/scratch/yunovikova/masters/sorted_reads"
+CollectWgsMetrics="/mnt/tank/scratch/yunovikova/masters/CollectWgsMetrics"
+AlignmentMetrics="/mnt/tank/scratch/yunovikova/masters/AlignmentMetrics"
+
+#-------------------FastP--------------------
+
+for TAG in CLS_1.1 CLS_1.2 CLS_2 CLS_3 LMM_99 UCI_1.1 UCI_1.2 UCI_1.3
+do
+fastp \
+	--in1 /mnt/tank/scratch/azhuk/jackal/reads/${TAG}_1.fastq.gz \
+	--out1 /mnt/tank/scratch/yunovikova/masters/fastp/${TAG}_1_fastp.fastq.gz \
+	--in2 /mnt/tank/scratch/azhuk/jackal/reads/${TAG}_2.fastq.gz \
+	--out2 /mnt/tank/scratch/yunovikova/masters/fastp/${TAG}_2_fastp.fastq.gz \
+	--json /mnt/tank/scratch/yunovikova/masters/fastp_reports/${TAG}.json --html /mnt/tank/scratch/yunovikova/masters/fastp_reports/${TAG}.html \
+	--detect_adapter_for_pe \
+	-l 30 \
+	-q 20  \
+	--overrepresentation_analysis \
+	--thread 16 \
+	--report_title ${TAG}\
+	--trim_poly_g
+done
