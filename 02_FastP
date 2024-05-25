@@ -13,19 +13,20 @@ fastp="/mnt/tank/scratch/yunovikova/masters/new_data/fastp"
 
 #-------------------FastP--------------------
 
-for TAG in CLS_1.1 CLS_1.2 CLS_2 CLS_3 LMM_99 UCI_1.1 UCI_1.2 UCI_1.3
+cd /mnt/tank/scratch/yunovikova/masters/new_data/new_genomes
+for file in /mnt/tank/scratch/yunovikova/masters/new_data/new_genomes/*_1.fastq.gz
 do
 fastp \
-	--in1 ${new_genomes}/${TAG}_1.fastq.gz \
-	--out1 ${fastp}/${TAG}_1_fastp.fastq.gz \
-	--in2 ${new_genomes}/${TAG}_2.fastq.gz \
-	--out2 ${fastp}/${TAG}_2_fastp.fastq.gz \
-	--json ${fastp}/fastp_reports/${TAG}.json --html ${fastp}/fastp_reports/${TAG}.html \
+	--in1 ${new_genomes}/${file} \
+	--out1 ${fastp}/${file%%_1.fastq.gz}_1_fastp.fastq.gz \
+	--in2 ${new_genomes}/${file%%_1.fastq.gz}_2.fastq.gz \
+	--out2 ${fastp}/${file%%_1.fastq.gz}_2_fastp.fastq.gz \
+	--json ${fastp}/fastp_reports/${file%%_1.fastq.gz}.json --html ${fastp}/fastp_reports/${file%%_1.fastq.gz}.html \
 	--detect_adapter_for_pe \
 	-l 30 \
 	-q 20  \
 	--overrepresentation_analysis \
 	--thread 16 \
-	--report_title ${TAG}\
+	--report_title ${file%%_1.fastq.gz}\
 	--trim_poly_g
 done
