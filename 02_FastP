@@ -5,6 +5,7 @@ source ~/.bashrc
 micromamba activate project
 
 mkdir /mnt/tank/scratch/yunovikova/masters/fastp_new
+
 #-------------------Paths--------------------
 
 genomes="/mnt/tank/scratch/yunovikova/masters/new_genomes"
