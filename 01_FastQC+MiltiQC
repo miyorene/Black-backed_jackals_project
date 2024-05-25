@@ -5,7 +5,6 @@ source ~/.bashrc
 micromamba activate project
 
 mkdir -p /mnt/tank/scratch/yunovikova/masters/FastQC_new/FastQC_before
-mkdir ${fastqc}/FastQC_before
 
 #-------------------Paths--------------------
 
