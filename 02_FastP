@@ -4,17 +4,11 @@
 source ~/.bashrc
 micromamba activate project
 
+mkdir /mnt/tank/scratch/yunovikova/masters/fastp_new
 #-------------------Paths--------------------
 
-masters="/mnt/tank/scratch/yunovikova/masters"
-genomes="/mnt/tank/scratch/yunovikova/masters/genomes"
-fastqc="/mnt/tank/scratch/yunovikova/masters/FastQC"
-fastp="/mnt/tank/scratch/yunovikova/masters/fastp"
-reference="/mnt/tank/scratch/yunovikova/masters/reference"
-aligned_reads="/mnt/tank/scratch/yunovikova/masters/aligned_reads"
-sorted_reads="/mnt/tank/scratch/yunovikova/masters/sorted_reads"
-CollectWgsMetrics="/mnt/tank/scratch/yunovikova/masters/CollectWgsMetrics"
-AlignmentMetrics="/mnt/tank/scratch/yunovikova/masters/AlignmentMetrics"
+genomes="/mnt/tank/scratch/yunovikova/masters/new_genomes"
+fastp="/mnt/tank/scratch/yunovikova/masters/fastp_new"
 
 #-------------------FastP--------------------
 
