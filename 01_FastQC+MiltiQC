@@ -6,6 +6,7 @@ micromamba activate project
 
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/FastQC/FastQC_before
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/MultiQC
+
 #-------------------Paths--------------------
 
 new_genomes="/mnt/tank/scratch/yunovikova/masters/new_data/new_genomes"
