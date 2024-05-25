@@ -8,7 +8,7 @@ mkdir -p /mnt/tank/scratch/yunovikova/masters/FastQC_new/FastQC_before
 
 #-------------------Paths--------------------
 
-genomes="/mnt/tank/scratch/yunovikova/masters/new_genomes"
+new_genomes="/mnt/tank/scratch/yunovikova/masters/new_genomes"
 fastqc="/mnt/tank/scratch/yunovikova/masters/FastQC_new"
 
 #-------------------FastP--------------------
