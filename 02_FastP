@@ -14,7 +14,7 @@ fastp="/mnt/tank/scratch/yunovikova/masters/new_data/fastp"
 #-------------------FastP--------------------
 
 cd /mnt/tank/scratch/yunovikova/masters/new_data/new_genomes
-for file in /mnt/tank/scratch/yunovikova/masters/new_data/new_genomes/*_1.fastq.gz
+for file in *_1.fastq.gz
 do
 fastp \
 	--in1 ${new_genomes}/${file} \
