@@ -8,7 +8,7 @@ mkdir /mnt/tank/scratch/yunovikova/masters/fastp_new
 
 #-------------------Paths--------------------
 
-genomes="/mnt/tank/scratch/yunovikova/masters/new_genomes"
+new_genomes="/mnt/tank/scratch/yunovikova/masters/new_genomes"
 fastp="/mnt/tank/scratch/yunovikova/masters/fastp_new"
 
 #-------------------FastP--------------------
@@ -16,9 +16,9 @@ fastp="/mnt/tank/scratch/yunovikova/masters/fastp_new"
 for TAG in CLS_1.1 CLS_1.2 CLS_2 CLS_3 LMM_99 UCI_1.1 UCI_1.2 UCI_1.3
 do
 fastp \
-	--in1 /mnt/tank/scratch/azhuk/jackal/reads/${TAG}_1.fastq.gz \
+	--in1 ${new_genomes}/${TAG}_1.fastq.gz \
 	--out1 /mnt/tank/scratch/yunovikova/masters/fastp/${TAG}_1_fastp.fastq.gz \
-	--in2 /mnt/tank/scratch/azhuk/jackal/reads/${TAG}_2.fastq.gz \
+	--in2 ${new_genomes}/${TAG}_2.fastq.gz \
 	--out2 /mnt/tank/scratch/yunovikova/masters/fastp/${TAG}_2_fastp.fastq.gz \
 	--json /mnt/tank/scratch/yunovikova/masters/fastp_reports/${TAG}.json --html /mnt/tank/scratch/yunovikova/masters/fastp_reports/${TAG}.html \
 	--detect_adapter_for_pe \
