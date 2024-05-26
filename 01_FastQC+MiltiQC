@@ -12,7 +12,7 @@ mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/MultiQC
 new_genomes="/mnt/tank/scratch/yunovikova/masters/new_data/new_genomes"
 fastqc="/mnt/tank/scratch/yunovikova/masters/new_data/FastQC"
 
-#-------------------FastP--------------------
+#-------------------FastQC--------------------
 
 find ${new_genomes} -type f -name "*.fastq.gz" | xargs -I {} fastqc {} -t 4 --outdir ${fastqc}/FastQC_before
 multiqc -o /mnt/tank/scratch/yunovikova/masters/new_data/MultiQC -n multiqc_before ${fastqc}/FastQC_before 
