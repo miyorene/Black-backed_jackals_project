@@ -22,13 +22,11 @@ bwa-mem2 index ${reference}/GCF_000002285.5/GCF_000002285.5_Dog10K_Boxer_Tasha_g
 #-------------------Alignment-----------------
 
 do
-
 bwa-mem2 mem -t 32 -R "@RG\tID:${TAG}\tPL:ILLUMINA\tPU:${TAG}\tLB:${TAG}\tSM:${TAG}" ${reference}/GCF_000002285.5/GCF_000002285.5_Dog10K_Boxer_Tasha_genomic.fna ${fastp}/${TAG}_1_fastp.fastq.gz ${fastp}/${TAG}_2_fastp.fastq.gz \
 | samtools view -b > ${aligned_reads}/${TAG}.bam
-
 done
 
-#-------------------Samtools-----------------
+#-----------------Sorting reads----------------
 
 for TAG in LMS_NCBI1 LAD_NCBI1 CLU_1 CLU_2 CLU_3 CLU_4 CLU_5 CLU_6 CLU_7 CLU_8 CLS_4 CSI_1 CSI_2 CAU_2 CAU_3 CAU_4 CAL_1 CLA_1 CLA_2 OME_1 CBR_1 CTH_1 LMS_26 LMM_T-2844 LMM_T-3360 LMM_T-3363 CLS_2 CLS_3 LMM_99 CAU_1 LPI_1 LPI_2 UCI_1 CLS_1
 do
