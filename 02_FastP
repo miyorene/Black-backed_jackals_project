@@ -30,3 +30,6 @@ fastp \
 	--report_title ${file%%_1.fastq.gz}\
 	--trim_poly_g
 done
+
+find ${fastp} -type f -name "*.fastq.gz" | xargs -I {} fastqc {} -t 4 --outdir ${fastqc}/FastQC_after
+multiqc -o /mnt/tank/scratch/yunovikova/masters/new_data/MultiQC -n multiqc_after ${fastqc}/FastQC_after
