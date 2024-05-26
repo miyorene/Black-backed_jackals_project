@@ -22,20 +22,20 @@ bwa-mem2 index ${reference}/canFam6.fna
 
 #-------------------Alignment-----------------
 
+cd ${fastp}
+for file in *_1_fastp.fastq.gz
 do
-bwa-mem2 mem -t 32 -R "@RG\tID:${TAG}\tPL:ILLUMINA\tPU:${TAG}\tLB:${TAG}\tSM:${TAG}" ${reference}/GCF_000002285.5/GCF_000002285.5_Dog10K_Boxer_Tasha_genomic.fna ${fastp}/${TAG}_1_fastp.fastq.gz ${fastp}/${TAG}_2_fastp.fastq.gz \
-| samtools view -b > ${aligned_reads}/${TAG}.bam
+bwa-mem2 mem -t 32 -R "@RG\tID:${file%%_1_fastp.fastq.gz}\tPL:ILLUMINA\tPU:${file%%_1_fastp.fastq.gz}\tLB:${file%%_1_fastp.fastq.gz}\tSM:${file%%_1_fastp.fastq.gz}" ${reference}/canFam6.fna ${fastp}/${file} ${fastp}/${file%%_1_fastp.fastq.gz}_2_fastp.fastq.gz \
+| samtools view -b > ${aligned_reads}/{file%%_1_fastp.fastq.gz}.bam
 done
 
 #-----------------Sorting reads----------------
 
-for TAG in LMS_NCBI1 LAD_NCBI1 CLU_1 CLU_2 CLU_3 CLU_4 CLU_5 CLU_6 CLU_7 CLU_8 CLS_4 CSI_1 CSI_2 CAU_2 CAU_3 CAU_4 CAL_1 CLA_1 CLA_2 OME_1 CBR_1 CTH_1 LMS_26 LMM_T-2844 LMM_T-3360 LMM_T-3363 CLS_2 CLS_3 LMM_99 CAU_1 LPI_1 LPI_2 UCI_1 CLS_1
+for file in ${aligned_reads}
 do
-samtools sort -@ 32 -O bam ${aligned_reads}/${TAG}.bam > ${aligned_reads}/${TAG}.sorted.bam
+samtools sort -@ 32 -O bam ${file} > ${file%%.bam}.sorted.bam
+rm ${file}
 done
-
-samtools merge -o ${aligned_reads}/UCI_1.sorted.bam ${aligned_reads}/UCI_1.1.sorted.bam ${aligned_reads}/UCI_1.2.sorted.bam ${aligned_reads}/UCI_1.3.sorted.bam
-samtools merge -o ${aligned_reads}/CLS_1.sorted.bam ${aligned_reads}/CLS_1.1.sorted.bam ${aligned_reads}/CLS_1.2.sorted.bam
 
 #-------------------MarkDuplicates-----------------
 
