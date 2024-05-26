@@ -5,6 +5,7 @@ source ~/.bashrc
 micromamba activate project
 
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/fastp/fastp_reports
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/FastQC/FastQC_after
 
 #-------------------Paths--------------------
 
