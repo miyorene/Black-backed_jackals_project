@@ -4,7 +4,8 @@
 source ~/.bashrc
 micromamba activate project
 
-
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/aligned_reads
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/sorted_reads
 
 #-------------------Paths--------------------
 
@@ -17,7 +18,7 @@ sorted_reads="/mnt/tank/scratch/yunovikova/masters/new_data/sorted_reads"
 
 #----------------Index reference--------------
 
-bwa-mem2 index ${reference}/GCF_000002285.5/GCF_000002285.5_Dog10K_Boxer_Tasha_genomic.fna
+bwa-mem2 index ${reference}/canFam6.fna
 
 #-------------------Alignment-----------------
 
