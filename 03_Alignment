@@ -27,7 +27,7 @@ cd ${fastp}
 for file in *_1_fastp.fastq.gz
 do
 bwa-mem2 mem -t 32 -R "@RG\tID:${file%%_1_fastp.fastq.gz}\tPL:ILLUMINA\tPU:${file%%_1_fastp.fastq.gz}\tLB:${file%%_1_fastp.fastq.gz}\tSM:${file%%_1_fastp.fastq.gz}" ${reference}/canFam6.fna ${fastp}/${file} ${fastp}/${file%%_1_fastp.fastq.gz}_2_fastp.fastq.gz \
-| samtools view -b > ${aligned_reads}/{file%%_1_fastp.fastq.gz}.bam
+| samtools view -b > ${aligned_reads}/${file%%_1_fastp.fastq.gz}.bam
 done
 
 #-------Sorting reads and MarkDuplicates------
