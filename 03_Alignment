@@ -5,7 +5,6 @@ source ~/.bashrc
 micromamba activate project
 
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/aligned_reads
-mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/sorted_reads
 
 #-------------------Paths--------------------
 
@@ -29,17 +28,19 @@ bwa-mem2 mem -t 32 -R "@RG\tID:${file%%_1_fastp.fastq.gz}\tPL:ILLUMINA\tPU:${fil
 | samtools view -b > ${aligned_reads}/{file%%_1_fastp.fastq.gz}.bam
 done
 
-#-----------------Sorting reads----------------
+#-------Sorting reads and MarkDuplicates------
 
+cd ${aligned_reads}
 for file in ${aligned_reads}
 do
 samtools sort -@ 32 -O bam ${file} > ${file%%.bam}.sorted.bam
-rm ${file}
+gatk MarkDuplicatesSpark --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp -I ${sorted_reads}/${TAG}.sorted.bam -O ${sorted_reads}/${TAG}.dedup.bam
+samtools flagstat ${sorted_reads}/${TAG}.dedup.bam > /mnt/tank/scratch/yunovikova/masters/samtools_reports/${TAG}.dedup.txt
 done
 
 #-------------------MarkDuplicates-----------------
 
-for TAG in LMS_NCBI1 LAD_NCBI1 CLU_1 CLU_2 CLU_3 CLU_4 CLU_5 CLU_6 CLU_7 CLU_8 CLS_4 CSI_1 CSI_2 CAU_2 CAU_3 CAU_4 CAL_1 CLA_1 CLA_2 OME_1 CBR_1 CTH_1 LMS_26 LMM_T-2844 LMM_T-3360 LMM_T-3363 CLS_2 CLS_3 LMM_99 CAU_1 LPI_1 LPI_2 UCI_1 CLS_1
+for file in ${aligned_reads}
 do
 gatk MarkDuplicatesSpark --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp -I ${sorted_reads}/${TAG}.sorted.bam -O ${sorted_reads}/${TAG}.dedup.bam
 samtools flagstat ${sorted_reads}/${TAG}.dedup.bam > /mnt/tank/scratch/yunovikova/masters/samtools_reports/${TAG}.dedup.txt
