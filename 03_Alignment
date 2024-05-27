@@ -34,7 +34,7 @@ cd ${aligned_reads}
 for file in ${aligned_reads}
 do
 samtools sort -@ 32 -O bam ${file} > ${file%%.bam}.sorted.bam
-gatk MarkDuplicatesSpark --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp -I ${sorted_reads}/${TAG}.sorted.bam -O ${sorted_reads}/${TAG}.dedup.bam
+java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar MarkDuplicates --TMP_DIR /mnt/tank/scratch/yunovikova/masters/tmp -I ${sorted_reads}/${TAG}.sorted.bam -O ${sorted_reads}/${TAG}.dedup.bam
 samtools flagstat ${sorted_reads}/${TAG}.dedup.bam > /mnt/tank/scratch/yunovikova/masters/samtools_reports/${TAG}.dedup.txt
 done
 
@@ -42,7 +42,7 @@ done
 
 for file in ${aligned_reads}
 do
-gatk MarkDuplicatesSpark --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp -I ${sorted_reads}/${TAG}.sorted.bam -O ${sorted_reads}/${TAG}.dedup.bam
+java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar MarkDuplicates --TMP_DIR /mnt/tank/scratch/yunovikova/masters/tmp -I ${sorted_reads}/${TAG}.sorted.bam -O ${sorted_reads}/${TAG}.dedup.bam
 samtools flagstat ${sorted_reads}/${TAG}.dedup.bam > /mnt/tank/scratch/yunovikova/masters/samtools_reports/${TAG}.dedup.txt
 done
 
