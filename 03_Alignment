@@ -33,7 +33,7 @@ done
 #-------Sorting reads and MarkDuplicates------
 
 cd ${aligned_reads}
-for file in ${aligned_reads}
+for file in *
 do
 samtools sort -@ 32 -O bam ${file} > ${dedup_reads}/${file%%.bam}.sorted.bam
 java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar MarkDuplicates \
