@@ -1,4 +1,3 @@
-
 #!/bin/bash -i
 
 /nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
