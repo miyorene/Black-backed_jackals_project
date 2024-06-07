@@ -4,8 +4,6 @@
 source ~/.bashrc
 micromamba activate project
 
-mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller
-
 #-------------------Paths--------------------
 
 reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
@@ -13,15 +11,6 @@ dedup_reads="/mnt/tank/scratch/yunovikova/masters/new_data/dedup_reads"
 HaplotypeCaller="/mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller"
 
 #--------------HapplotypeCaller--------------
-
-gatk CreateSequenceDictionary -R ${reference}/canFam6.fna
-samtools faidx ${reference}/canFam6.fna
-
-cd ${dedup_reads}
-for file in *
-do
-mkdir -p ${HaplotypeCaller}/${file%%.dedup.bam}
-done
 
 for file in *
 do
