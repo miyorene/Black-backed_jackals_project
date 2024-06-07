@@ -18,7 +18,7 @@ do
 gatk --java-options "-Xmx6g" HaplotypeCaller \
    -R ${reference}/canFam6.fna \
    -I $file \
-   -O ${HaplotypeCaller}/${file%%.dedup.bam}/${file%%.dedup.bam}_93-94.g.vcf.gz \
+   -O ${HaplotypeCaller}/${file%%.dedup.bam}/${file%%.dedup.bam}_93-95.g.vcf.gz \
    -ERC GVCF \
    --native-pair-hmm-threads 2 \
    --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
