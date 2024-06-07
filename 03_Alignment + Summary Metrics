@@ -50,6 +50,17 @@ java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar MarkDuplicates \
 rm $file ${dedup_reads}/${file%%.bam}.sorted.bam
 done
 
-#------------Flagstat multiqc-----------------
+#-------------SummaryMetrics-----------------
 
-multiqc /mnt/tank/scratch/yunovikova/masters/new_data/samtools_reports -o /mnt/tank/scratch/yunovikova/masters/new_data/MultiQC -n multiqc_samtools
+cd ${dedup_reads}
+for file in *
+do
+samtools flagstat $file > ${Metrics}/Samtools_reports/${file%%.bam}.txt
+java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar CollectWgsMetrics -I $file -O ${Metrics}/${file%%.bam}.wgs_metrics.txt -R ${reference}/canFam6.fna
+java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar CollectAlignmentSummaryMetrics -I $file -O ${Metrics}/${file%%.bam}.alignment_metrics.txt -R ${reference}/canFam6.fna
+mosdepth -t 16 -n --fast-mode ${Metrics}/Mosdepth/${file%%.bam} $file
+done
+
+#------------Metrics multiqc-----------------
+
+multiqc /mnt/tank/scratch/yunovikova/masters/Metrics -o /mnt/tank/scratch/yunovikova/masters/new_data/MultiQC -n multiqc_Metrics
