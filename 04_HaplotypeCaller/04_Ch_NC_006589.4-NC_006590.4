@@ -17,10 +17,11 @@ HaplotypeCaller="/mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller"
 cd ${dedup_reads}
 for file in *
 do
+mkdir -p ${HaplotypeCaller}/${file%%.dedup.bam}
 gatk --java-options "-Xmx6g" HaplotypeCaller \
    -R ${reference}/canFam6.fna \
    -I $file \
-   -O ${HaplotypeCaller}/${file%%.dedup.bam}.g.vcf.gz \
+   -O ${HaplotypeCaller}/${file%%.dedup.bam}/${file%%.dedup.bam}.g.vcf.gz \
    -ERC GVCF \
    --native-pair-hmm-threads 2 \
    --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
