@@ -12,6 +12,7 @@ HaplotypeCaller="/mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller"
 
 #--------------HapplotypeCaller--------------
 
+cd ${dedup_reads}
 for file in *
 do
 gatk --java-options "-Xmx6g" HaplotypeCaller \
