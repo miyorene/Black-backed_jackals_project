@@ -58,8 +58,8 @@ cd ${dedup_reads}
 for file in *
 do
 samtools flagstat $file > ${Metrics}/Samtools_reports/${file%%.bam}.txt
-java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar CollectWgsMetrics -I $file -O ${Metrics}/${file%%.bam}.wgs_metrics.txt -R ${reference}/canFam6.fna
-java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar CollectAlignmentSummaryMetrics -I $file -O ${Metrics}/${file%%.bam}.alignment_metrics.txt -R ${reference}/canFam6.fna
+java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar CollectWgsMetrics -I $file -O ${Metrics}/CollectWgsMetrics/${file%%.bam}.wgs_metrics.txt -R ${reference}/canFam6.fna
+java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar CollectAlignmentSummaryMetrics -I $file -O ${Metrics}/CollectAlignmentSummaryMetrics/${file%%.bam}.alignment_metrics.txt -R ${reference}/canFam6.fna
 mosdepth -t 16 -n --fast-mode ${Metrics}/Mosdepth/${file%%.bam} $file
 done
 
