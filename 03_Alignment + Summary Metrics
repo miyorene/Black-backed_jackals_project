@@ -45,9 +45,9 @@ samtools sort -@ 32 -O bam ${file} > ${dedup_reads}/${file%%.bam}.sorted.bam
 java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar MarkDuplicates \
     --TMP_DIR /mnt/tank/scratch/yunovikova/masters/tmp \
     -I ${dedup_reads}/${file%%.bam}.sorted.bam \
-    -M ${dedup_reads}/${file%%.bam}.metrics.txt \
+    -M ${Metrics}/MarkDullicates/${file%%.bam}.metrics.txt \
     -O ${dedup_reads}/${file%%.bam}.dedup.bam
-samtools flagstat ${dedup_reads}/${file%%.bam}.dedup.bam > /mnt/tank/scratch/yunovikova/masters/new_data/samtools_reports/${file%%.bam}.dedup.txt
+rm $file ${dedup_reads}/${file%%.bam}.sorted.bam
 done
 
 #------------Flagstat multiqc-----------------
