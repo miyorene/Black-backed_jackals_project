@@ -1,0 +1,16 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+
+gatk --java-options "-Xmx6g" HaplotypeCaller \
+   -R ${reference}/GCF_000002285.5/GCF_000002285.5_Dog10K_Boxer_Tasha_genomic.fna \
+   -I ${sorted_reads}/UCI_1.dedup.bam \
+   -O ${masters}/HaplotypeCaller/UCI_1_83-84.g.vcf.gz \
+   -ERC GVCF \
+   --native-pair-hmm-threads 8 \
+   --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
+   -L NC_006583.4 \
+   -L NC_006584.4
