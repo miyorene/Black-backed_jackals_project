@@ -47,8 +47,10 @@ java -jar /mnt/tank/scratch/yunovikova/picard/picard.jar MarkDuplicates \
     -I ${dedup_reads}/${file%%.bam}.sorted.bam \
     -M ${Metrics}/MarkDuplicates/${file%%.bam}.metrics.txt \
     -O ${dedup_reads}/${file%%.bam}.dedup.bam
-rm $file ${dedup_reads}/${file%%.bam}.sorted.bam
+rm ${dedup_reads}/${file%%.bam}.sorted.bam
 done
+
+rmdir ${aligned_reads}
 
 #-------------SummaryMetrics-----------------
 
