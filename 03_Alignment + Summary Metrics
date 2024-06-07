@@ -7,6 +7,11 @@ micromamba activate project
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/aligned_reads
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/dedup_reads
 mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/samtools_reports
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/Metrics/MarkDulicates
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/Metrics/CollectWgsMetrics
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/Metrics/CollectAlignmentSummaryMetrics
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/Metrics/Mosdepth
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/Metrics/Samtools_reports
 
 #-------------------Paths--------------------
 
@@ -16,6 +21,7 @@ fastp="/mnt/tank/scratch/yunovikova/masters/new_data/fastp"
 reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
 aligned_reads="/mnt/tank/scratch/yunovikova/masters/new_data/aligned_reads"
 dedup_reads="/mnt/tank/scratch/yunovikova/masters/new_data/dedup_reads"
+Metrics="/mnt/tank/scratch/yunovikova/masters/new_data/Metrics"
 
 #----------------Index reference--------------
 
