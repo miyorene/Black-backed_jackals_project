@@ -4,13 +4,26 @@
 source ~/.bashrc
 micromamba activate project
 
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller
 
+#-------------------Paths--------------------
+
+reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
+dedup_reads="/mnt/tank/scratch/yunovikova/masters/new_data/dedup_reads"
+HaplotypeCaller="/mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller"
+
+#--------------HapplotypeCaller--------------
+
+cd ${dedup_reads}
+for file in *
+do
 gatk --java-options "-Xmx6g" HaplotypeCaller \
-   -R ${reference}/GCF_000002285.5/GCF_000002285.5_Dog10K_Boxer_Tasha_genomic.fna \
-   -I ${sorted_reads}/UCI_1.dedup.bam \
-   -O ${masters}/HaplotypeCaller/UCI_1_83-84.g.vcf.gz \
+   -R ${reference}/canFam6.fna \
+   -I $file \
+   -O ${HaplotypeCaller}/${file%%.dedup.bam}.g.vcf.gz \
    -ERC GVCF \
-   --native-pair-hmm-threads 8 \
+   --native-pair-hmm-threads 2 \
    --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
    -L NC_006583.4 \
    -L NC_006584.4
+done
