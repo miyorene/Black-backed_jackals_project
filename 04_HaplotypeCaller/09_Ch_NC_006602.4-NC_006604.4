@@ -1,0 +1,31 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+mkdir -p /mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller
+
+#-------------------Paths--------------------
+
+reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
+dedup_reads="/mnt/tank/scratch/yunovikova/masters/new_data/dedup_reads"
+HaplotypeCaller="/mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller"
+
+#--------------HapplotypeCaller--------------
+
+cd ${dedup_reads}
+for file in *
+do
+mkdir -p ${HaplotypeCaller}/${file%%.dedup.bam}
+gatk --java-options "-Xmx6g" HaplotypeCaller \
+   -R ${reference}/canFam6.fna \
+   -I $file \
+   -O ${HaplotypeCaller}/${file%%.dedup.bam}/${file%%.dedup.bam}.g.vcf.gz \
+   -ERC GVCF \
+   --native-pair-hmm-threads 2 \
+   --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
+   -L NC_006602.4 \
+   -L NC_006603.4 \
+   -L NC_006604.4
+done
