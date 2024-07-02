@@ -47,3 +47,7 @@ java -Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovik
    -I ${new_data}/GenotypeGVCFs/canis_37.vcf.gz \
    -I ${new_data}/GenotypeGVCFs/canis_38.vcf.gz \
    -O ${new_data}/Full_canis_autosomes.vcf.gz
+
+gatk --java-options "-Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp" IndexFeatureFile \
+     --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
+     -I ${new_data}/Full_canis_autosomes.vcf.gz
