@@ -1,0 +1,35 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+HaplotypeCaller="/mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller"
+dedup_reads="/mnt/tank/scratch/yunovikova/masters/new_data/dedup_reads"
+
+cd ${dedup_reads}
+
+TAGs=()
+for file in *.dedup.bam
+do
+TAGs+=(${file%%.dedup.bam})
+done
+
+for TAG in ${TAGs[@]}
+do
+java -Xmx50G -XX:ParallelGCThreads=20 -jar -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp /mnt/tank/scratch/yunovikova/picard/picard.jar GatherVcfs \
+   --TMP_DIR /mnt/tank/scratch/yunovikova/masters/tmp \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_83-84.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_85-86.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_87-88.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_89-90.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_91-92.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_93-95.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_96-98.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_99-01.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_02-04.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_05-08.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_09-13.g.vcf.gz \
+   -I ${HaplotypeCaller}/${TAG}/${TAG}_14-20.g.vcf.gz \
+   -O ${HaplotypeCaller}/Full_Haplotype/${TAG}.g.vcf.gz
+done
