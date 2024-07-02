@@ -1,0 +1,54 @@
+#!/bin/bash -i
+#SBATCH --cpus-per-task=4
+#SBATCH --mem-per-cpu=8G
+#SBATCH --array=1-38%8
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+#-------------------Paths--------------------
+
+reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
+new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
+
+mkdir -p ${new_data}/CombineGVCFs
+
+gatk --java-options "-Xmx8G -XX:ParallelGCThreads=4 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp" CombineGVCFs \
+   -R ${reference}/canFam6.fna \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_NCBI1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LAD_NCBI1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLU_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLU_3.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLS_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLS_4.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CSI_2.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CAU_2.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CAU_3.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LPI_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CAL_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLA_2.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/OME_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CBR_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/CTH_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/UCI_1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_26.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMM_99.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_SNP_07_52.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_607.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_525.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_2433.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMM_J5.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMM_CM33.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMM_CC1.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMM_CARE.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LAD_6.g.vcf.gz \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LAD_19.g.vcf.gz \
+   -L NC_006$((582+${SLURM_ARRAY_TASK_ID})).4 \
+   -O ${new_data}/CombineGVCFs/VCF_${SLURM_ARRAY_TASK_ID}.g.vcf.gz \
+   --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp
+
+gatk --java-options "-Xmx8G -XX:ParallelGCThreads=4" GenotypeGVCFs \
+   -R ${reference}/canFam6.fna \
+   -V ${new_data}/CombineGVCFs/VCF_${SLURM_ARRAY_TASK_ID}.g.vcf.gz \
+   -O ${new_data}/GenotypeGVCFs/VCF_${SLURM_ARRAY_TASK_ID}/canis_${SLURM_ARRAY_TASK_ID}.vcf.gz
