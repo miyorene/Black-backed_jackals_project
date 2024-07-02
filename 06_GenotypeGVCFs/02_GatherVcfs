@@ -1,0 +1,49 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
+
+java -Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp -jar /mnt/tank/scratch/yunovikova/picard/picard.jar GatherVcfs \
+   --TMP_DIR /mnt/tank/scratch/yunovikova/masters/tmp \
+   -I ${new_data}/GenotypeGVCFs/canis_1.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_2.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_3.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_4.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_5.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_6.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_7.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_8.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_9.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_10.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_11.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_12.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_13.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_14.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_15.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_16.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_17.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_18.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_19.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_20.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_21.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_22.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_23.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_24.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_25.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_26.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_27.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_28.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_29.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_30.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_31.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_32.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_33.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_34.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_35.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_36.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_37.vcf.gz \
+   -I ${new_data}/GenotypeGVCFs/canis_38.vcf.gz \
+   -O ${new_data}/Full_canis_autosomes.vcf.gz
