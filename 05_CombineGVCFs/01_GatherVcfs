@@ -33,3 +33,10 @@ java -Xmx50G -XX:ParallelGCThreads=20 -jar -Djava.io.tmpdir=/mnt/tank/scratch/yu
    -I ${HaplotypeCaller}/${TAG}/${TAG}_14-20.g.vcf.gz \
    -O ${HaplotypeCaller}/Full_Haplotype/${TAG}.g.vcf.gz
 done
+
+for file in /mnt/tank/scratch/yunovikova/masters/new_data/HaplotypeCaller/Full_Haplotype/*.g.vcf.gz
+do
+gatk --java-options "-Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp" IndexFeatureFile \
+     --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
+     -I $file
+done
