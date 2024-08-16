@@ -47,8 +47,3 @@ gatk --java-options "-Xmx8G -XX:ParallelGCThreads=4 -Djava.io.tmpdir=/mnt/tank/s
    -L NC_006$((582+${SLURM_ARRAY_TASK_ID})).4 \
    -O ${new_data}/CombineGVCFs/VCF_${SLURM_ARRAY_TASK_ID}.g.vcf.gz \
    --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp
-
-gatk --java-options "-Xmx8G -XX:ParallelGCThreads=4" GenotypeGVCFs \
-   -R ${reference}/canFam6.fna \
-   -V ${new_data}/CombineGVCFs/VCF_${SLURM_ARRAY_TASK_ID}.g.vcf.gz \
-   -O ${new_data}/GenotypeGVCFs/VCF_${SLURM_ARRAY_TASK_ID}/canis_${SLURM_ARRAY_TASK_ID}.vcf.gz
