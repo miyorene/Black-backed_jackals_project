@@ -1,0 +1,11 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+#-------------------Paths--------------------
+
+new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
+python /mnt/tank/scratch/yunovikova/vcf2phylip-master/vcf2phylip.py -i ${new_data}/Full_canis_snps_final.vcf --output-folder ${new_data}/consensus --output-prefix autosomal -o UCI_1
+iqtree -s ${new_data}/consensus/autosomal.min4.phy -B 1000 -T AUTO
