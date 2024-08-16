@@ -1,0 +1,43 @@
+#!/bin/bash -i
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+#-------------------Paths--------------------
+
+new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
+reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
+
+gatk SelectVariants \
+    -V ${new_data}/Full_canis_autosomes.vcf.gz \
+    -select-type SNP \
+    -O ${new_data}/Full_canis_snps.vcf.gz
+
+gatk VariantFiltration \
+    -V ${new_data}/Full_canis_snps.vcf.gz \
+    --filter-name "QD2" --filter-expression "QD < 2.0" \
+    --filter-name "QUAL30" --filter-expression "QUAL < 30.0" \
+    --filter-name "SOR3" --filter-expression "SOR > 3.0" \
+    --filter-name "FS60" --filter-expression "FS > 60.0" \
+    --filter-name "MQ40" --filter-expression "MQ < 40.0" \
+    --filter-name "MQRankSum-12.5" --filter-expression "MQRankSum < -12.5" \
+    --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
+    -O ${new_data}/Full_canis_filtered_snps.vcf.gz
+
+bcftools view -f .,PASS ${new_data}/Full_canis_snps_filtered.vcf.gz -o $new_data}/Full_canis_snps_pass.vcf.gz
+
+vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
+  --minDP 10 \
+  --minQ 20 \
+  --remove-indels \
+  --min-alleles 2 \
+  --max-alleles 2 \
+  --non-ref-ac-any 1 \
+  --max-missing 0.9 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/Full_canis_snps_pass_90
+
+bcftools filter -e 'FMT/DP<10 & FMT/DP!=0 & FMT/GQ<20 & FMT/GQ!=0' ${new_data}/Full_canis_snps_pass_90.recode.vcf -o ${new_data}/Full_canis_snps_final.vcf
+bcftools stats --samples '-' ${new_data}/Full_canis_snps_final.vcf > ${new_data}/stats_final.txt
