@@ -23,7 +23,6 @@ gatk VariantFiltration \
     --filter-name "MQ40" --filter-expression "MQ < 40.0" \
     --filter-name "MQRankSum-12.5" --filter-expression "MQRankSum < -12.5" \
     --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
-    --genotype-filter-name "DP10" --genotype-filter-expression "DP < 10"
     -O ${new_data}/Full_canis_filtered_snps.vcf.gz
 
 bcftools view -f .,PASS ${new_data}/Full_canis_snps_filtered.vcf.gz -o $new_data}/Full_canis_snps_pass.vcf.gz
