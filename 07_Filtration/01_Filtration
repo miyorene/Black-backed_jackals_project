@@ -39,5 +39,5 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
   --recode-INFO-all \
   --out ${new_data}/Full_canis_snps_pass_90
 
-bcftools filter -e 'FMT/DP<10 & FMT/DP!=0 & FMT/GQ<20 & FMT/GQ!=0' ${new_data}/Full_canis_snps_pass_90.recode.vcf -o ${new_data}/Full_canis_snps_final.vcf
+bcftools filter -e 'FMT/DP<10 || FMT/GQ<20' ${new_data}/Full_canis_snps_pass_90.recode.vcf -o ${new_data}/Full_canis_snps_final.vcf
 bcftools stats --samples '-' ${new_data}/Full_canis_snps_final.vcf > ${new_data}/stats_final.txt
