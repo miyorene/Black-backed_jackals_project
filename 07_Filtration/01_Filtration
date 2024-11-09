@@ -25,11 +25,9 @@ gatk VariantFiltration \
     --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
     -O ${new_data}/Full_canis_filtered_snps.vcf.gz
 
-bcftools view -f .,PASS ${new_data}/Full_canis_snps_filtered.vcf.gz -o $new_data}/Full_canis_snps_pass.vcf.gz
+bcftools filter -e 'FMT/DP<10 || FMT/GQ<20' ${new_data}/Full_canis_filtered_snps.vcf.gz | bcftools view -f .,PASS -o ${new_data}/Full_canis_snps_pass.vcf.gz
 
 vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
-  --minDP 10 \
-  --minQ 30 \
   --remove-indels \
   --min-alleles 2 \
   --max-alleles 2 \
@@ -37,7 +35,24 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
   --max-missing 0.9 \
   --recode \
   --recode-INFO-all \
-  --out ${new_data}/Full_canis_snps_pass_90
+  --out ${new_data}/Full_canis
 
-bcftools filter -e 'FMT/DP<10 || FMT/GQ<20' ${new_data}/Full_canis_snps_pass_90.recode.vcf -o ${new_data}/Full_canis_snps_final.vcf
-bcftools stats --samples '-' ${new_data}/Full_canis_snps_final.vcf > ${new_data}/stats_final.txt
+vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella.txt\
+  --remove-indels \
+  --min-alleles 2 \
+  --max-alleles 2 \
+  --non-ref-ac-any 1 \
+  --max-missing 0.9 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/Lupulella
+
+vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_CTH.txt\
+  --remove-indels \
+  --min-alleles 2 \
+  --max-alleles 2 \
+  --non-ref-ac-any 1 \
+  --max-missing 0.9 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/Lupulella_with_CTH
