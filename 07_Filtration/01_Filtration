@@ -37,7 +37,7 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
   --recode-INFO-all \
   --out ${new_data}/Full_canis
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella.txt\
+vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella.txt \
   --remove-indels \
   --min-alleles 2 \
   --max-alleles 2 \
@@ -47,7 +47,7 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella.txt\
   --recode-INFO-all \
   --out ${new_data}/Lupulella
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_CTH.txt\
+vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_CTH.txt \
   --remove-indels \
   --min-alleles 2 \
   --max-alleles 2 \
