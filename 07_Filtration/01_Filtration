@@ -59,4 +59,4 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_C
 
 gzip ${new_data}/Full_canis.recode.vcf
 gzip ${new_data}/Lupulella.recode.vcf
-gzip ${new_data}/Lupulella_with_CTH.vcf
+gzip ${new_data}/Lupulella_with_CTH.recode.vcf
