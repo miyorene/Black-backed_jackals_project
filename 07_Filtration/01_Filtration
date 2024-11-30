@@ -57,6 +57,28 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_C
   --recode-INFO-all \
   --out ${new_data}/Lupulella_with_CTH
 
+vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_data}/All_vcf/LMS_dhole.txt \
+  --remove-indels \
+  --min-alleles 2 \
+  --max-alleles 2 \
+  --non-ref-ac-any 1 \
+  --max-missing 0.9 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/All_vcf/LMS_dhole
+  
+vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_data}/All_vcf/LMS_ahd.txt \
+  --remove-indels \
+  --min-alleles 2 \
+  --max-alleles 2 \
+  --non-ref-ac-any 1 \
+  --max-missing 0.9 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/All_vcf/LMS_ahd
+
 gzip ${new_data}/Full_canis.recode.vcf
 gzip ${new_data}/Lupulella.recode.vcf
 gzip ${new_data}/Lupulella_with_CTH.recode.vcf
+gzip ${new_data}/LMS_dhole.recode.vcf
+gzip ${new_data}/LMS_ahd.recode.vcf
