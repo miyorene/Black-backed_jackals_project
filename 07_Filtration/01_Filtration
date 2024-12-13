@@ -77,7 +77,7 @@ vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_da
   --recode-INFO-all \
   --out ${new_data}/All_vcf/LMS_ahd
 
-gzip ${new_data}/Full_canis.recode.vcf
+gzip ${new_data}/Full_canis.recode.vcf (bgzip file.vcf)
 gzip ${new_data}/Lupulella.recode.vcf
 gzip ${new_data}/Lupulella_with_CTH.recode.vcf
 gzip ${new_data}/LMS_dhole.recode.vcf
