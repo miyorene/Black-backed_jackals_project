@@ -49,27 +49,27 @@ bgzip ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf
 
 #------------AD filtration----------------
 
-bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' -o ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz
+bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' -o ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz
 
 #------------keep sites that have at least 90% of individuals have data----------------
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz \
   --max-missing 0.9 \
   --out ${new_data}/Full_canis_final
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep Lupulella.txt \
   --max-missing 0.9 \
   --out ${new_data}/Lupulella
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_CTH.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep Lupulella_with_CTH.txt \
   --max-missing 0.9 \
   --out ${new_data}/Lupulella_with_CTH
 
-vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_data}/All_vcf/LMS_dhole.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/All_vcf/LMS_dhole.txt \
   --max-missing 0.9 \
   --out ${new_data}/All_vcf/LMS_dhole
   
-vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_data}/All_vcf/LMS_ahd.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/All_vcf/LMS_ahd.txt \
   --max-missing 0.9 \
   --out ${new_data}/All_vcf/LMS_ahd
 
@@ -78,3 +78,18 @@ bgzip ${new_data}/Lupulella.vcf
 bgzip ${new_data}/Lupulella_with_CTH.vcf
 bgzip ${new_data}/LMS_dhole.vcf
 bgzip ${new_data}/LMS_ahd.vcf
+
+#------------Stats----------------
+
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_autosomes.txt ${new_data}/Full_canis_autosomes.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps.txt ${new_data}/Full_canis_snps.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered.txt ${new_data}/Full_canis_snps_hard_filtered.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass.txt ${new_data}/Full_canis_snps_hard_filtered_pass.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ.txt ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.txt ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.txt ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_final.txt ${new_data}/Full_canis_final.vcf.gz
+bcftools stats --threads 20 -o ${new_data}/stats/Lupulella.txt ${new_data}/Lupulella.vcf.gz
+
+#------------Stats----------------
+
