@@ -91,5 +91,7 @@ bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_p
 bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_final.txt ${new_data}/Full_canis_final.vcf.gz
 bcftools stats --threads 20 -o ${new_data}/stats/Lupulella.txt ${new_data}/Lupulella.vcf.gz
 
-#------------Stats----------------
+#--------MultiQC report------------
+
+multiqc ${new_data}/stats -o ${new_data}/stats/stats_vcfs -n multiqc_stats_vcfs
 
