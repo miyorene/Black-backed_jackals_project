@@ -23,64 +23,45 @@ gatk VariantFiltration \
     --filter-name "MQ40" --filter-expression "MQ < 40.0" \
     --filter-name "MQRankSum-12.5" --filter-expression "MQRankSum < -12.5" \
     --filter-name "ReadPosRankSum-8" --filter-expression "ReadPosRankSum < -8.0" \
-    -O ${new_data}/Full_canis_filtered_snps.vcf.gz
+    -O ${new_data}/Full_canis_snps_hard_filtered.vcf.gz
 
-bcftools filter -e 'FMT/DP<10 || FMT/GQ<20' ${new_data}/Full_canis_filtered_snps.vcf.gz | bcftools view -f .,PASS -o ${new_data}/Full_canis_snps_pass.vcf.gz
+bcftools view -f .,PASS -o ${new_data}/Full_canis_snps_hard_filtered_pass.vcf.gz ${new_data}/Full_canis_snps_hard_filtered.vcf.gz
 
-#bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' /mnt/tank/scratch/yunovikova/masters/new_data/All_vcf/Full_canis.recode.vcf.gz
+bcftools filter -e 'FMT/DP<10 || FMT/GQ<20' -o ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz ${new_data}/Full_canis_snps_hard_filtered_pass.vcf.gz
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz \
   --remove-indels \
   --min-alleles 2 \
   --max-alleles 2 \
   --non-ref-ac-any 1 \
+  --out ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic
+
+bgzip ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf
+
+bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' -o ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz
+
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz \
   --max-missing 0.9 \
-  --recode \
-  --recode-INFO-all \
-  --out ${new_data}/Full_canis
+  --out ${new_data}/Full_canis_final
 
 vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella.txt \
-  --remove-indels \
-  --min-alleles 2 \
-  --max-alleles 2 \
-  --non-ref-ac-any 1 \
   --max-missing 0.9 \
-  --recode \
-  --recode-INFO-all \
   --out ${new_data}/Lupulella
 
 vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz --keep Lupulella_with_CTH.txt \
-  --remove-indels \
-  --min-alleles 2 \
-  --max-alleles 2 \
-  --non-ref-ac-any 1 \
   --max-missing 0.9 \
-  --recode \
-  --recode-INFO-all \
   --out ${new_data}/Lupulella_with_CTH
 
 vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_data}/All_vcf/LMS_dhole.txt \
-  --remove-indels \
-  --min-alleles 2 \
-  --max-alleles 2 \
-  --non-ref-ac-any 1 \
   --max-missing 0.9 \
-  --recode \
-  --recode-INFO-all \
   --out ${new_data}/All_vcf/LMS_dhole
   
 vcftools --gzvcf ${new_data}/All_vcf/Full_canis_snps_pass.vcf.gz --keep ${new_data}/All_vcf/LMS_ahd.txt \
-  --remove-indels \
-  --min-alleles 2 \
-  --max-alleles 2 \
-  --non-ref-ac-any 1 \
   --max-missing 0.9 \
-  --recode \
-  --recode-INFO-all \
   --out ${new_data}/All_vcf/LMS_ahd
 
-gzip ${new_data}/Full_canis.recode.vcf (bgzip file.vcf)
-gzip ${new_data}/Lupulella.recode.vcf
-gzip ${new_data}/Lupulella_with_CTH.recode.vcf
-gzip ${new_data}/LMS_dhole.recode.vcf
-gzip ${new_data}/LMS_ahd.recode.vcf
+bgzip ${new_data}/Full_canis_final.vcf
+bgzip ${new_data}/Lupulella.vcf
+bgzip ${new_data}/Lupulella_with_CTH.vcf
+bgzip ${new_data}/LMS_dhole.vcf
+bgzip ${new_data}/LMS_ahd.vcf
