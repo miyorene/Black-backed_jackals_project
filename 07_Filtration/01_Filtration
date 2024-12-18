@@ -27,6 +27,8 @@ gatk VariantFiltration \
 
 bcftools filter -e 'FMT/DP<10 || FMT/GQ<20' ${new_data}/Full_canis_filtered_snps.vcf.gz | bcftools view -f .,PASS -o ${new_data}/Full_canis_snps_pass.vcf.gz
 
+#bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' /mnt/tank/scratch/yunovikova/masters/new_data/All_vcf/Full_canis.recode.vcf.gz
+
 vcftools --gzvcf ${new_data}/Full_canis_snps_pass.vcf.gz \
   --remove-indels \
   --min-alleles 2 \
