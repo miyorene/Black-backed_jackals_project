@@ -8,18 +8,19 @@ micromamba activate project
 
 new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
 reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
+GATKpath="/mnt/tank/scratch/yunovikova/gatk-4.6.0.0/gatk-package-4.6.0.0-local.jar"
 
 #------------GATK hard-filtering-------------
 #----------------Select SNPs-----------------
 
-gatk SelectVariants \
+java -Xmx230G -XX:ParallelGCThreads=30 -jar -Djava.io.tmpdir=${masters}/tmp ${GATKpath} SelectVariants \
     -V ${new_data}/Full_canis_autosomes.vcf.gz \
     -select-type SNP \
     -O ${new_data}/Full_canis_snps.vcf.gz
 
 #----------------Filtration------------------
 
-gatk VariantFiltration \
+java -Xmx230G -XX:ParallelGCThreads=30 -jar -Djava.io.tmpdir=${masters}/tmp ${GATKpath} VariantFiltration \
     -V ${new_data}/Full_canis_snps.vcf.gz \
     --filter-name "QD2" --filter-expression "QD < 2.0" \
     --filter-name "QUAL30" --filter-expression "QUAL < 30.0" \
@@ -43,55 +44,73 @@ vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz \
   --min-alleles 2 \
   --max-alleles 2 \
   --non-ref-ac-any 1 \
+  --recode \
+  --recode-INFO-all \
   --out ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic
 
-bgzip ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf
+bgzip ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.recode.vcf
 
 #------------AD filtration----------------
 
-bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' -o ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz
+bcftools view -e 'FMT/AD[:1] < 5 & FORMAT/GT="alt"' -o ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.recode.vcf.gz
 
 #------------keep sites that have at least 90% of individuals have data----------------
 
 vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz \
   --max-missing 0.9 \
+  --non-ref-ac-any 1 \
+  --recode \
+  --recode-INFO-all \
   --out ${new_data}/Full_canis_final
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep Lupulella.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/Filt_vcfs/samples_lists/Lupulella.txt \
   --max-missing 0.9 \
+  --non-ref-ac-any 1 \
+  --recode \
+  --recode-INFO-all \
   --out ${new_data}/Lupulella
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep Lupulella_with_CTH.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/Filt_vcfs/samples_lists/Lupulella_with_CTH.txt \
   --max-missing 0.9 \
+  --non-ref-ac-any 1 \
+  --recode \
+  --recode-INFO-all \
   --out ${new_data}/Lupulella_with_CTH
 
-vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/All_vcf/LMS_dhole.txt \
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/Filt_vcfs/samples_lists/LMS_dhole.txt \
   --max-missing 0.9 \
-  --out ${new_data}/All_vcf/LMS_dhole
-  
-vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/All_vcf/LMS_ahd.txt \
-  --max-missing 0.9 \
-  --out ${new_data}/All_vcf/LMS_ahd
+  --non-ref-ac-any 1 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/LMS_dhole
 
-bgzip ${new_data}/Full_canis_final.vcf
-bgzip ${new_data}/Lupulella.vcf
-bgzip ${new_data}/Lupulella_with_CTH.vcf
-bgzip ${new_data}/LMS_dhole.vcf
-bgzip ${new_data}/LMS_ahd.vcf
+vcftools --gzvcf ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/Filt_vcfs/samples_lists/LMS_ahd.txt \
+  --max-missing 0.9 \
+  --non-ref-ac-any 1 \
+  --recode \
+  --recode-INFO-all \
+  --out ${new_data}/LMS_ahd
+
+bgzip ${new_data}/Full_canis_final.recode.vcf
+bgzip ${new_data}/Lupulella.recode.vcf
+bgzip ${new_data}/Lupulella_with_CTH.recode.vcf
+bgzip ${new_data}/LMS_dhole.recode.vcf
+bgzip ${new_data}/LMS_ahd.recode.vcf
 
 #------------Stats----------------
 
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_autosomes.txt ${new_data}/Full_canis_autosomes.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps.txt ${new_data}/Full_canis_snps.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered.txt ${new_data}/Full_canis_snps_hard_filtered.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass.txt ${new_data}/Full_canis_snps_hard_filtered_pass.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ.txt ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.txt ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.txt ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Full_canis_final.txt ${new_data}/Full_canis_final.vcf.gz
-bcftools stats --threads 20 -o ${new_data}/stats/Lupulella.txt ${new_data}/Lupulella.vcf.gz
+#mkdir -p ${new_data}/stats
+
+bcftools stats --threads 20 ${new_data}/Full_canis_autosomes.vcf.gz > ${new_data}/stats/Full_canis_autosomes.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_snps.vcf.gz > ${new_data}/stats/Full_canis_snps.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_snps_hard_filtered.vcf.gz > ${new_data}/stats/Full_canis_snps_hard_filtered.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_snps_hard_filtered_pass.vcf.gz > ${new_data}/stats/Full_canis_snps_hard_filtered_pass.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ.vcf.gz > ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.recode.vcf.gz > ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz > ${new_data}/stats/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.txt
+bcftools stats --threads 20 ${new_data}/Full_canis_final.recode.vcf.gz > ${new_data}/stats/Full_canis_final.txt
+bcftools stats --threads 20 ${new_data}/Lupulella.recode.vcf.gz > ${new_data}/stats/Lupulella.txt
 
 #--------MultiQC report------------
 
 multiqc ${new_data}/stats -o ${new_data}/stats/stats_vcfs -n multiqc_stats_vcfs
-
