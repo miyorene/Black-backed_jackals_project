@@ -1,0 +1,14 @@
+#!/bin/bash -i
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2G
+#SBATCH --array=1-7000
+
+/nfs/home/yunovikova/.local/bin/micromamba shell init -s bash -p ~/micromamba
+source ~/.bashrc
+micromamba activate project
+
+new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
+reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
+
+RANDOMREGION=$(sed "${SLURM_ARRAY_TASK_ID}q;d" ${new_data}/files_for_astral/list_of_random_positions.txt)
+bedtools intersect -a ${new_data}/Full_canis_final.recode.vcf.gz -b ${new_data}/regions_astral/${RANDOMREGION} > ${new_data}/vcfs_astral/autosomes_${SLURM_ARRAY_TASK_ID}.vcf.gz
