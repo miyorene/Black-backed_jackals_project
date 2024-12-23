@@ -13,9 +13,7 @@ mkdir -p ${new_data}/vcfs_astral
 mkdir -p ${new_data}/vcfs_header_astral
 mkdir -p ${new_data}/phyfiles_astral
 
-cd ${new_data}/regions_astral
-
 bedtools random -g ${reference}/camFam6_autosomes.fna.fai -l 20000 -n 7000 > ${new_data}/files_for_astral/randomregions_output_bedfile.txt
 awk '!/^$/{print  > "File_"NR".txt" }' ${new_data}/files_for_astral/randomregions_output_bedfile.txt
 
-ls > ${new_data}/files_for_astral/list_of_random_positions.txt
+ls ${new_data}/regions_astral > ${new_data}/files_for_astral/list_of_random_positions.txt
