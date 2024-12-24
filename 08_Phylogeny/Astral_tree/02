@@ -11,4 +11,4 @@ new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
 reference="/mnt/tank/scratch/yunovikova/masters/new_data/reference"
 
 RANDOMREGION=$(sed "${SLURM_ARRAY_TASK_ID}q;d" ${new_data}/files_for_astral/list_of_random_positions.txt)
-bedtools intersect -a ${new_data}/Full_canis_final.recode.vcf.gz -b ${new_data}/regions_astral/${RANDOMREGION} > ${new_data}/vcfs_astral/autosomes_${SLURM_ARRAY_TASK_ID}.vcf
+bedtools intersect -a ${new_data}/Full_canis_final.recode.vcf.gz -b ${RANDOMREGION} > ${new_data}/vcfs_astral/autosomes_${SLURM_ARRAY_TASK_ID}.vcf
