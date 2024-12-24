@@ -15,3 +15,5 @@ a="$(cat $file | wc -l)"
   echo $file
   fi
 done
+
+ls ${new_data}/vcfs_astral/*.vcf.gz > ${new_data}/files_for_astral/list_of_vcffiles.txt
