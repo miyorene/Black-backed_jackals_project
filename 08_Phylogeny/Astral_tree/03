@@ -17,3 +17,4 @@ a="$(cat $file | wc -l)"
 done
 
 ls ${new_data}/vcfs_astral/*.vcf.gz > ${new_data}/files_for_astral/list_of_vcffiles.txt
+zgrep "#" ${new_data}/Full_canis_final.recode.vcf.gz > ${new_data}/files_for_astral/header_autosomes.txt
