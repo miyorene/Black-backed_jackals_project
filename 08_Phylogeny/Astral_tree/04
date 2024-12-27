@@ -1,0 +1,1 @@
+ls /mnt/tank/scratch/yunovikova/masters/new_data/phyfiles_astral/*.phy > /mnt/tank/scratch/yunovikova/masters/new_data/files_for_astral/list_of_phyfiles.txt
