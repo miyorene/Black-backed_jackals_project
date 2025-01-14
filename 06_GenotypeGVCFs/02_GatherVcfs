@@ -5,7 +5,7 @@ source ~/.bashrc
 micromamba activate project
 
 new_data="/mnt/tank/scratch/yunovikova/masters/new_data"
-
+mkdir -p ${new_data}/vcfs
 java -Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp -jar /mnt/tank/scratch/yunovikova/picard/picard.jar GatherVcfs \
    --TMP_DIR /mnt/tank/scratch/yunovikova/masters/tmp \
    -I ${new_data}/GenotypeGVCFs/canis_1.vcf.gz \
@@ -46,8 +46,8 @@ java -Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovik
    -I ${new_data}/GenotypeGVCFs/canis_36.vcf.gz \
    -I ${new_data}/GenotypeGVCFs/canis_37.vcf.gz \
    -I ${new_data}/GenotypeGVCFs/canis_38.vcf.gz \
-   -O ${new_data}/Full_canis_autosomes.vcf.gz
+   -O ${new_data}/vcfs/Full_canis_autosomes.vcf.gz
 
 gatk --java-options "-Xmx50G -XX:ParallelGCThreads=20 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp" IndexFeatureFile \
      --tmp-dir /mnt/tank/scratch/yunovikova/masters/tmp \
-     -I ${new_data}/Full_canis_autosomes.vcf.gz
+     -I ${new_data}/vcfs/Full_canis_autosomes.vcf.gz
