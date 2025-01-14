@@ -77,25 +77,25 @@ vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biall
   --recode-INFO-all \
   --out ${new_data}/vcfs/Lupulella_with_CTH
 
-vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/vcfs/samples_lists/LMS_dhole.txt \
+vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/vcfs/samples_lists/LMS_LAD_Dhole_CTH.txt \
   --max-missing 0.9 \
   --non-ref-ac-any 1 \
   --recode \
   --recode-INFO-all \
-  --out ${new_data}/vcfs/LMS_dhole
+  --out ${new_data}/vcfs/LMS_LAD_Dhole_CTH
 
-vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/vcfs/samples_lists/LMS_ahd.txt \
+vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/vcfs/samples_listsLMS_LAD_Ahd_CTH.txt \
   --max-missing 0.9 \
   --non-ref-ac-any 1 \
   --recode \
   --recode-INFO-all \
-  --out ${new_data}/vcfs/LMS_ahd
+  --out ${new_data}/vcfs/LMS_LAD_Ahd_CTH
 
 bgzip ${new_data}/vcfs/Full_canis_final.recode.vcf
 bgzip ${new_data}/vcfs/Lupulella.recode.vcf
 bgzip ${new_data}/vcfs/Lupulella_with_CTH.recode.vcf
-bgzip ${new_data}/vcfs/LMS_dhole.recode.vcf
-bgzip ${new_data}/vcfs/LMS_ahd.recode.vcf
+bgzip ${new_data}/vcfs/LMS_LAD_Dhole_CTH.recode.vcf
+bgzip ${new_data}/vcfs/LMS_LAD_Ahd_CTH.vcf
 
 #------------Stats----------------
 
