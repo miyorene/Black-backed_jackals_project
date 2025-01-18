@@ -75,7 +75,7 @@ vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biall
   --non-ref-ac-any 1 \
   --recode \
   --recode-INFO-all \
-  --out ${new_data}/vcfs/Lupulella_with_CTH
+  --out ${new_data}/vcfs/Lupulella_CTH
 
 vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biallelic_AD.vcf.gz --keep ${new_data}/vcfs/samples_lists/LMS_LAD_Dhole_CTH.txt \
   --max-missing 0.9 \
@@ -93,7 +93,7 @@ vcftools --gzvcf ${new_data}/vcfs/Full_canis_snps_hard_filtered_pass_DP_GQ_biall
 
 bgzip ${new_data}/vcfs/Full_canis_final.recode.vcf
 bgzip ${new_data}/vcfs/Lupulella.recode.vcf
-bgzip ${new_data}/vcfs/Lupulella_with_CTH.recode.vcf
+bgzip ${new_data}/vcfs/Lupulella_CTH.recode.vcf
 bgzip ${new_data}/vcfs/LMS_LAD_Dhole_CTH.recode.vcf
 bgzip ${new_data}/vcfs/LMS_LAD_Ahd_CTH.vcf
 
