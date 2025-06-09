@@ -16,7 +16,7 @@ mkdir -p ${new_data}/CombineGVCFs
 
 gatk --java-options "-Xmx8G -XX:ParallelGCThreads=4 -Djava.io.tmpdir=/mnt/tank/scratch/yunovikova/masters/tmp" CombineGVCFs \
    -R ${reference}/canFam6.fna \
-   -V ${new_data}/HaplotypeCaller/Full_Haplotype/$file \
+   -V ${new_data}/HaplotypeCaller/Full_Haplotype/LMS_NCBI1.g.vcf.gz \
    -V ${new_data}/HaplotypeCaller/Full_Haplotype/LAD_NCBI1.g.vcf.gz \
    -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLU_1.g.vcf.gz \
    -V ${new_data}/HaplotypeCaller/Full_Haplotype/CLU_3.g.vcf.gz \
