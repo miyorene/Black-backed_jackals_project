@@ -11,7 +11,7 @@ micromamba activate project
 
 set -u
 
-BASE="/mnt/tank/scratch/yunovikova/mitogenomes/sanger_2026"
+BASE="/mnt/tank/scratch/yunovikova/sanger"
 NUCLEAR_DIR="${BASE}/nuclear"
 ORIGINAL_DIR="${NUCLEAR_DIR}/original"
 RESULTS_DIR="${NUCLEAR_DIR}/complete_pipeline"
