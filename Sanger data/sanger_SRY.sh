@@ -30,7 +30,7 @@ mafft \
     "$ORIGINAL_FASTA" \
     > "${MAFFT_DIR}/SRY_aligned.fasta"
 
-# 2. Removal of ambiguously aligned regions with Gblocks
+# 2. Removal of ambiguously aligned regions with Gblocks (optional)
 GBLOCKS_INPUT="${GBLOCKS_DIR}/SRY_aligned.fasta"
 cp "${MAFFT_DIR}/SRY_aligned.fasta" "$GBLOCKS_INPUT"
 
