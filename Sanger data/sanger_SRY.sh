@@ -48,7 +48,7 @@ Gblocks "$GBLOCKS_INPUT" \
 mv "${GBLOCKS_INPUT}-gb.fa" \
     "${GBLOCKS_DIR}/SRY_gblocks.fasta"
 
-# 3. Maximum-likelihood trees with model selection and UFBoot2
+# 3. Maximum-likelihood trees with model selection
 iqtree3 \
     -s "${MAFFT_DIR}/SRY_aligned.fasta" \
     -m MFP \
