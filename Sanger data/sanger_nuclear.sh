@@ -77,7 +77,7 @@ python3 "$CONCATENATE_SCRIPT" \
     --sample-prefix-order LMS,LMM,LAD \
     "${GBLOCKS_ALIGNMENTS[@]}"
 
-# 4. Maximum-likelihood trees with per-locus model selection and UFBoot2
+# 4. Maximum-likelihood trees with per-locus model selection
 iqtree3 \
     -s "${CONCAT_DIR}/nuclear_mafft_concatenated.fasta" \
     -p "${CONCAT_DIR}/nuclear_mafft.partitions" \
