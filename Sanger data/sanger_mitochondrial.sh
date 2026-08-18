@@ -36,7 +36,7 @@ for LOCUS in "${LOCI[@]}"; do
         > "${MAFFT_DIR}/${LOCUS}_aligned.fasta"
 done
 
-# 2. Remove ambiguously aligned regions from each alignment with Gblocks.
+# 2. Remove ambiguously aligned regions from each alignment with Gblocks. (optional)
 for LOCUS in "${LOCI[@]}"; do
     GBLOCKS_INPUT="${GBLOCKS_DIR}/${LOCUS}_aligned.fasta"
     cp "${MAFFT_DIR}/${LOCUS}_aligned.fasta" "$GBLOCKS_INPUT"
