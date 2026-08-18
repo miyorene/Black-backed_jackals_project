@@ -26,7 +26,7 @@ LOCI=(ATP6_8 NADH)
 
 mkdir -p "$MAFFT_DIR" "$GBLOCKS_DIR" "$CONCAT_DIR" "$IQTREE_DIR"
 
-# 1. Align each mitochondrial locus independently with MAFFT L-INS-i.
+# 1. Align each mitochondrial locus independently with MAFFT L-INS-i
 for LOCUS in "${LOCI[@]}"; do
     mafft \
         --localpair \
@@ -36,7 +36,7 @@ for LOCUS in "${LOCI[@]}"; do
         > "${MAFFT_DIR}/${LOCUS}_aligned.fasta"
 done
 
-# 2. Remove ambiguously aligned regions from each alignment with Gblocks. (optional)
+# 2. Remove ambiguously aligned regions from each alignment with Gblocks (optional)
 for LOCUS in "${LOCI[@]}"; do
     GBLOCKS_INPUT="${GBLOCKS_DIR}/${LOCUS}_aligned.fasta"
     cp "${MAFFT_DIR}/${LOCUS}_aligned.fasta" "$GBLOCKS_INPUT"
@@ -56,7 +56,7 @@ for LOCUS in "${LOCI[@]}"; do
         "${GBLOCKS_DIR}/${LOCUS}_gblocks.fasta"
 done
 
-# 3. Concatenate the two MAFFT alignments and the two Gblocks alignments.
+# 3. Concatenate the two MAFFT alignments and the two Gblocks alignments
 MAFFT_ALIGNMENTS=()
 GBLOCKS_ALIGNMENTS=()
 
@@ -77,7 +77,7 @@ python3 "$CONCATENATE_SCRIPT" \
     --sample-prefix-order LMS,LMM,LAD \
     "${GBLOCKS_ALIGNMENTS[@]}"
 
-# 4. Build partitioned maximum-likelihood trees with ModelFinder and UFBoot2.
+# 4. Build partitioned maximum-likelihood trees with ModelFinder
 # LAD_1 is used as the outgroup.
 iqtree3 \
     -s "${CONCAT_DIR}/mitochondrial_mafft_concatenated.fasta" \
